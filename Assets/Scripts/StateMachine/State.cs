@@ -27,7 +27,7 @@ public class State
         lookAction = character.playerInput.actions["Look"];
         jumpAction = character.playerInput.actions["Jump"];
         crouchAction = character.playerInput.actions["Crouch"];
-        sprintAction = character.playerInput.actions["Sprint"];
+        sprintAction = character.playerInput.actions["Sprints"];
     }
     public virtual void Enter()
     {
