@@ -49,9 +49,18 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        controller=GetComponent<CharacterController>();
-        animator=GetComponent<Animator>();
-        playerInput=GetComponent<PlayerInput>();
+        Init();
+
+        movementSM.Initialize(standing);
+        normalColliderHeight = controller.height;
+        gravityValue = gravityMultiplier;
+    }
+
+    private void Init()
+    {
+        controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        playerInput = GetComponent<PlayerInput>();
         cameraTransform = Camera.main.transform;
 
         movementSM = new StateMachine();
@@ -61,11 +70,8 @@ public class Character : MonoBehaviour
         landing = new LandingState(this, movementSM);
         sprinting = new SprintState(this, movementSM);
         sprintjumping = new SprintJumpState(this, movementSM);
-
-        movementSM.Initialize(standing);
-        normalColliderHeight = controller.height;
-        gravityValue = gravityMultiplier;
     }
+
     void Update()
     {
         movementSM.currentState.HandleInput();
