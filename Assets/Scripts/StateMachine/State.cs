@@ -12,22 +12,12 @@ public class State
     protected Vector3 velocity;
     protected Vector2 input;
 
-    public InputAction moveAction;
-    public InputAction lookAction;
-    public InputAction jumpAction;
-    public InputAction crouchAction;
-    public InputAction sprintAction;
-
     public State(Character _character,StateMachine _stateMachine)
     {
         character=_character;
         stateMachine=_stateMachine;
 
-        moveAction = character.playerInput.actions["Move"];
-        lookAction = character.playerInput.actions["Look"];
-        jumpAction = character.playerInput.actions["Jump"];
-        crouchAction = character.playerInput.actions["Crouch"];
-        sprintAction = character.playerInput.actions["Sprints"];
+
     }
     public virtual void Enter()
     {

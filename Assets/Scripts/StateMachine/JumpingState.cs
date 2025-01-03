@@ -37,7 +37,6 @@ public class JumpingState : State
     public override void HandleInput()
     {
         base.HandleInput();
-        input = moveAction.ReadValue<Vector2>();
     }
 
     public override void LogicUpdate()

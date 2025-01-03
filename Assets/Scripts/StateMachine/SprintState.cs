@@ -10,7 +10,6 @@ public class SprintState : State
     bool grounded;
     bool sprint;
     float playerSpeed;
-    bool sprintJump;
     Vector3 cVelocity;
     public SprintState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -22,7 +21,6 @@ public class SprintState : State
     {
         base.Enter();
         sprint = false;
-        sprintJump=false;
         input = Vector2.zero;
         velocity = Vector3.zero;
         currentVelocity = Vector3.zero;
@@ -41,13 +39,12 @@ public class SprintState : State
     public override void HandleInput()
     {
         base.HandleInput();
-        input = moveAction.ReadValue<Vector2>();
         velocity = new Vector3(input.x, 0f, input.y);
 
         velocity = velocity.x * character.cameraTransform.right.normalized +
             velocity.z * character.cameraTransform.forward.normalized;
         velocity.y = 0f;
-        if(sprintAction.triggered || input.sqrMagnitude == 0f)
+        if(Input.GetKeyDown(KeyCode.LeftShift) || input.sqrMagnitude == 0f)
         {
             sprint = false;
         }
@@ -55,10 +52,7 @@ public class SprintState : State
         {
             sprint = true;
         }
-        if (jumpAction.triggered)
-        {
-            sprintJump = true;
-        }
+      
     }
 
     public override void LogicUpdate()
@@ -74,10 +68,7 @@ public class SprintState : State
         {
             stateMachine.ChangeState(character.standing);
         }
-        if (sprintJump)
-        {
-            stateMachine.ChangeState(character.sprintjumping);
-        }
+   
     }
 
 

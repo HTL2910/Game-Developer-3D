@@ -6,10 +6,10 @@ public class StandingState : State
 {
     float gravityValue;
     bool jump;
-    bool crouch;
     Vector3 currentVelocity;
     bool grounded;
     bool sprint;
+    bool move;
     float playerSpeed;
     Vector3 cVelocity;
 
@@ -23,9 +23,8 @@ public class StandingState : State
     {
         base.Enter();
         jump = false;
-        crouch = false;
         sprint = false;
-        input = Vector2.zero;
+        input = Vector2.one;
         velocity = Vector3.zero;
         currentVelocity=Vector3.zero;
         gravityVelocity.y = 0f;
@@ -38,19 +37,15 @@ public class StandingState : State
     public override void HandleInput()
     {
         base.HandleInput();
-        if (jumpAction.triggered)
+        if (Input.GetKeyDown(KeyCode.J))
         {
             jump = true;
         }
-        if (crouchAction.triggered)
+
+        if(Input.GetKeyDown(KeyCode.L))
         {
-            crouch = true;
+            move = true;
         }
-        if(sprintAction.triggered)
-        {
-            sprint = true;
-        }
-        input = moveAction.ReadValue<Vector2>();
         velocity=velocity.x*character.cameraTransform.right.normalized+
             velocity.z*character.cameraTransform.forward.normalized;
         velocity.y = 0f;
@@ -63,15 +58,16 @@ public class StandingState : State
         if (sprint)
         {
             stateMachine.ChangeState(character.sprinting);
+        }  
+        if (move)
+        {
+            stateMachine.ChangeState(character.landing);
         }
         if (jump)
         {
             stateMachine.ChangeState(character.jumping);
         }
-        if (crouch)
-        {
-            stateMachine.ChangeState(character.crouching);
-        }
+     
     }
 
     public override void PhysicUpdate()

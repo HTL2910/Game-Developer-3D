@@ -26,10 +26,8 @@ public class Character : MonoBehaviour
     public StateMachine movementSM;
     public StandingState standing;
     public JumpingState jumping;
-    public CrouchingState crouching;
     public LandingState landing;
     public SprintState sprinting;
-    public SprintJumpState sprintjumping;
 
     [HideInInspector]
     public float gravityValue = -9.81f;
@@ -51,16 +49,13 @@ public class Character : MonoBehaviour
     {
         controller=GetComponent<CharacterController>();
         animator=GetComponent<Animator>();
-        playerInput=GetComponent<PlayerInput>();
         cameraTransform = Camera.main.transform;
 
         movementSM = new StateMachine();
         standing = new StandingState(this, movementSM);
         jumping = new JumpingState(this, movementSM);
-        crouching = new CrouchingState(this, movementSM);
         landing = new LandingState(this, movementSM);
         sprinting = new SprintState(this, movementSM);
-        sprintjumping = new SprintJumpState(this, movementSM);
 
         movementSM.Initialize(standing);
         normalColliderHeight = controller.height;

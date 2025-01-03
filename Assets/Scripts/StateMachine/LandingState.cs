@@ -37,6 +37,7 @@ public class LandingState : State
         if (timePassed > landingTime)
         {
             character.animator.SetTrigger("Move");
+            character.animator.SetFloat("Speed",3f);
             stateMachine.ChangeState(character.standing);
         }
         timePassed += Time.deltaTime;
